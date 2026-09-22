@@ -1,0 +1,12 @@
+# Support Recordkeeping Accessible Guide
+Document ID: D304
+Version: 1.0 accessible
+Department: Support
+Publication Date: 2026-04-05
+Effective Date: 2026-04-03
+Authority: Approved Support Operations notice
+Scope: locations=['Pune', 'Mumbai'], employee_category='support staff', conditions=['standard-plan incidents', 'received during business hours']
+
+[C1] For each standard-plan incident received in business hours, enter the callback in its service-desk ticket.
+[C2] This accessible guide restates the callback recordkeeping requirement without altering operational policy.
+[C3] Approved by Support Operations.

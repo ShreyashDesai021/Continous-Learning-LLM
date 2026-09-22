@@ -1,0 +1,11 @@
+# Production Backup Standard Reminder
+Document ID: D404
+Version: 2.0 reminder
+Department: IT
+Publication Date: 2026-04-18
+Effective Date: 2026-05-01
+Authority: IT Director; approved standard revision
+Scope: locations=['Pune', 'Mumbai'], employee_category='IT staff', conditions=['production application backups']
+
+[C1] Keep production application backups for a period of 45 days, as required from 1 May 2026.
+[C2] Operational reminder for the approved backup standard version 2.0.

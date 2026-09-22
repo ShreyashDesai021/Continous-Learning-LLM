@@ -1,0 +1,13 @@
+# Production Deployment SOP
+Document ID: D501
+Version: Production 1.0
+Department: Engineering
+Publication Date: 2026-01-08
+Effective Date: 2026-01-15
+Authority: Release Manager-approved SOP
+Scope: locations=['Pune', 'Mumbai'], employee_category='engineering staff', conditions=['production deployments']
+
+[C1] Production deployments require two reviewers.
+[C2] Production deployment logs must be retained for 90 days.
+[C3] Production deployment health checks must run for 15 minutes.
+[C4] This SOP is effective from 15 January 2026.

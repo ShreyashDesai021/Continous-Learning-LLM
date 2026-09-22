@@ -1,0 +1,10 @@
+# Standard Support Onboarding Note
+Document ID: D302
+Version: null
+Department: Support
+Publication Date: null
+Effective Date: null
+Authority: Imported onboarding note; approver unknown
+Scope: locations=['Pune', 'Mumbai'], employee_category='support staff', conditions=['standard-plan incidents', 'received during business hours']
+
+[C1] For standard-plan customer incidents received during business hours, the support team must call the customer within eight business hours.

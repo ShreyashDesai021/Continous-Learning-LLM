@@ -1,0 +1,12 @@
+# Development Deployment SOP
+Document ID: D502
+Version: Development 1.0
+Department: Engineering
+Publication Date: 2026-02-01
+Effective Date: 2026-02-05
+Authority: Release Manager-approved SOP
+Scope: locations=['Pune', 'Mumbai'], employee_category='engineering staff', conditions=['development-environment deployments']
+
+[C1] Development-environment deployments require one reviewer.
+[C2] Development-environment deployment logs must be retained for 14 days.
+[C3] This SOP applies only to development environments from 5 February 2026.

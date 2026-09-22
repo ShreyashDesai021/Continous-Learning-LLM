@@ -1,0 +1,11 @@
+# Mumbai Late-Working Meal Allowance
+Document ID: D204
+Version: Mumbai 2.0
+Department: Finance
+Publication Date: 2026-06-01
+Effective Date: 2026-06-15
+Authority: Finance Controller (approved office supplement)
+Scope: locations=['Mumbai'], employee_category='all', conditions=['work after 21:00', 'one meal per eligible working day']
+
+[C1] From 15 June 2026, the meal reimbursement ceiling for Mumbai employees working after 21:00 is INR 400 per eligible working day.
+[C2] This approved supplement replaces Mumbai version 1.0. Pune office provisions remain unchanged.

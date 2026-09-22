@@ -1,0 +1,32 @@
+project:
+  name: "enterprise-cllm-baseline"
+  version: "1.0.0"
+  device: "cpu"
+
+paths:
+  data_dir: "d:/BTech Project Antigravity/data"
+  storage_dir: "d:/BTech Project Antigravity/storage"
+  models_dir: "d:/BTech Project Antigravity/storage/models"
+  qdrant_dir: "d:/BTech Project Antigravity/storage/qdrant_storage"
+  results_dir: "d:/BTech Project Antigravity/results/baseline"
+
+embedding:
+  model_name: "BAAI/bge-m3"
+  dimension: 1024
+  normalize_embeddings: true
+  batch_size: 4
+  max_length: 512
+
+llm:
+  model_name: "Qwen/Qwen2.5-1.5B-Instruct"
+  torch_dtype: "float32"
+  max_new_tokens: 128
+  temperature: 0.0
+  repetition_penalty: 1.05
+
+retrieval:
+  top_k: 5
+  similarity_metric: "cosine"
+
+runtime:
+  num_threads: 8

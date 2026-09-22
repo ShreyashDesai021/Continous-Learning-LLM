@@ -1,0 +1,13 @@
+# Production Deployment SOP, Accessible Reissue
+Document ID: D504
+Version: Production 1.1 reissue
+Department: Engineering
+Publication Date: 2026-04-10
+Effective Date: 2026-04-01
+Authority: Release Manager-approved SOP
+Scope: locations=['Pune', 'Mumbai'], employee_category='engineering staff', conditions=['production deployments']
+
+[C1] Obtain approvals from two reviewers for a production deployment.
+[C2] Keep production deployment logs for 90 days.
+[C3] Monitor production deployment health for 30 minutes.
+[C4] This accessible-text reissue restates version 1.1, effective 1 April 2026, without changing its requirements.

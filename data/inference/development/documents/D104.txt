@@ -1,0 +1,12 @@
+# Remote Working Policy FAQ
+Document ID: D104
+Version: FAQ 2026-06
+Department: HR
+Publication Date: 2026-06-18
+Effective Date: 2026-07-01
+Authority: HR Operations (approved guide)
+Scope: locations=['Pune', 'Mumbai'], employee_category='permanent'
+
+[C1] Permanent staff in Pune and Mumbai can use up to four remote-working days each week from 1 July 2026.
+[C2] This FAQ explains the Remote Working Policy version 3.0 provisions.
+[C3] Approved by HR Operations.

@@ -1,0 +1,19 @@
+{
+  "split_unit": "policy_family",
+  "train": [],
+  "development": [
+    "remote_work",
+    "office_meals",
+    "support_callback",
+    "backup_retention",
+    "deployment"
+  ],
+  "test": [
+    "procurement",
+    "visitor_access",
+    "training_budget",
+    "equipment_service",
+    "invoice_disputes"
+  ],
+  "reason": "Development partition contains 5 families; test partition reserved for frozen confirmatory run."
+}

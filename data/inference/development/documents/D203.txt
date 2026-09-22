@@ -1,0 +1,11 @@
+# Finance Help Article: Pune Evening Meals
+Document ID: D203
+Version: KB edition 1
+Department: Finance
+Publication Date: 2026-02-02
+Effective Date: 2026-01-05
+Authority: Finance Controller (approved knowledge-base restatement)
+Scope: locations=['Pune'], employee_category='all', conditions=['work after 21:00', 'one meal per eligible working day']
+
+[C1] For Pune staff who work beyond 9 p.m., the reimbursement ceiling is INR 250 for a single meal on that working day.
+[C2] This article restates the Pune office supplement effective 5 January 2026 and introduces no policy change.

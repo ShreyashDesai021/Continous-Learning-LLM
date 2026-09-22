@@ -1,0 +1,12 @@
+# Remote Working Policy
+Document ID: D103
+Version: 3.0
+Department: HR
+Publication Date: 2026-06-15
+Effective Date: 2026-07-01
+Authority: HR Director (approved corporate policy)
+Scope: locations=['Pune', 'Mumbai'], employee_category='permanent'
+
+[C1] From 1 July 2026, permanent employees may work remotely for a maximum of four days per week.
+[C2] This policy applies to the Pune and Mumbai offices and supersedes Remote Working Policy version 2.0 from that date.
+[C3] Approved by the HR Director.

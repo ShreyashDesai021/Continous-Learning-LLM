@@ -1,0 +1,12 @@
+# Support Recordkeeping Notice
+Document ID: D303
+Version: 1.0
+Department: Support
+Publication Date: 2026-04-03
+Effective Date: 2026-04-03
+Authority: Approved Support Operations notice
+Scope: locations=['Pune', 'Mumbai'], employee_category='support staff', conditions=['standard-plan incidents', 'received during business hours']
+
+[C1] Every callback for a standard-plan incident received during business hours must be recorded in the service-desk ticket.
+[C2] This notice establishes recordkeeping requirements only and does not define a callback deadline.
+[C3] Approved by Support Operations.

@@ -1,0 +1,11 @@
+# Infrastructure Team Discussion
+Document ID: D402
+Version: null
+Department: IT
+Publication Date: 2026-03-05
+Effective Date: null
+Authority: Team discussion export; unapproved suggestion
+Scope: locations=['Pune', 'Mumbai'], employee_category='IT staff', conditions=['production application backups']
+
+[C1] We should retain production application backups for only seven days to reduce storage consumption.
+[C2] This is a team suggestion and has not been approved as a change to the backup standard.

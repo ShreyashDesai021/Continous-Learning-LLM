@@ -1,0 +1,17 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Pytest
+.pytest_cache/
+
+# Storage weights and Qdrant database locks
+storage/models/
+storage/vector_cache/
+storage/qdrant_storage/
+
+# Environment
+.env
+venv/
+.venv/

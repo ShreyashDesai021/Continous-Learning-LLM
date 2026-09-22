@@ -1,0 +1,21 @@
+{
+  "total_questions": 1,
+  "mean_accuracy": 1.0,
+  "mean_required_claim_coverage": 1.0,
+  "forbidden_claim_violation_rate": 0.0,
+  "mean_evidence_recall": 1.0,
+  "mean_evidence_precision": 1.0,
+  "outdated_answer_rate": 0.0,
+  "conflict_handling_rate": 1.0,
+  "mean_latency_ms": 56656.02480000234,
+  "category_breakdown": {
+    "future_effective": {
+      "count": 1,
+      "accuracy": 1.0,
+      "evidence_recall": 1.0,
+      "evidence_precision": 1.0
+    }
+  },
+  "governing_clause_accuracy": 1.0,
+  "superseded_clause_suppression_rate": 1.0
+}

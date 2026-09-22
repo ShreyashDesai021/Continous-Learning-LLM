@@ -1,0 +1,11 @@
+# Production Backup Standard, Version 2.0
+Document ID: D403
+Version: 2.0
+Department: IT
+Publication Date: 2026-04-15
+Effective Date: 2026-05-01
+Authority: IT Director; approved standard revision
+Scope: locations=['Pune', 'Mumbai'], employee_category='IT staff', conditions=['production application backups']
+
+[C1] Production application backups must be retained for 45 days from 1 May 2026.
+[C2] This is the IT Director-approved version 2.0 of the Production Backup Standard.
