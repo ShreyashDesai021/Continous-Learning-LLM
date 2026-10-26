@@ -55,10 +55,7 @@ class AMOPipeline(CAKEPipeline):
         """Executes AMO-optimized RAG workflow for a given question."""
         start_time = time.perf_counter()
 
-        # 1. Snapshot index lookup
-        col_name = self.ensure_snapshot_indexed(question.snapshot_at)
-
-        # 2. Query Embedding Cache Check
+        # 1. Query Embedding Cache Check
         cached_q_vec = self.query_cache.get(question.question)
         if cached_q_vec is not None:
             q_vec = cached_q_vec
@@ -68,12 +65,12 @@ class AMOPipeline(CAKEPipeline):
             self.query_cache.set(question.question, q_vec)
             query_cache_hit = False
 
-        # 3. Deterministic Family Routing
+        # 2. Deterministic Family Routing
         user_ctx_dict = question.user_context.model_dump() if question.user_context else {}
         routing_res = self.family_router.route_query(question.question, user_ctx_dict)
         candidate_family = routing_res.candidate_family
 
-        # 4. Context Cache Check (Query Pattern Memory)
+        # 3. Context Cache Check (Query Pattern Memory) - BEFORE any snapshot indexing
         cached_ctx: Optional[CachedCAKEContext] = None
         if candidate_family:
             cached_ctx = self.context_cache.get(
@@ -84,17 +81,19 @@ class AMOPipeline(CAKEPipeline):
             )
 
         if cached_ctx is not None:
-            # CONTEXT CACHE HIT: 100% bypass of Qdrant dense vector search & CAKE resolution
+            # CONTEXT CACHE HIT: 100% bypass of Qdrant dense vector search & CAKE resolution & snapshot indexing
             context_cache_hit = True
             raw_retrieved_chunks = []
             cake_chunks = cached_ctx.governing_chunks
             governing_ids = cached_ctx.governing_ids
             suppressed_ids = cached_ctx.suppressed_ids
             future_ids = cached_ctx.future_ids
+            has_conflict = cached_ctx.has_conflict
             retrieval_method = "context_cache_hit"
         else:
-            # CONTEXT CACHE MISS: Execute Payload-Filtered or Global Search
+            # CONTEXT CACHE MISS: Index snapshot only now when retrieval is truly needed
             context_cache_hit = False
+            col_name = self.ensure_snapshot_indexed(question.snapshot_at)
 
             if candidate_family is not None and not routing_res.fallback_to_global:
                 # Shortlist via Qdrant native payload filter
@@ -126,12 +125,43 @@ class AMOPipeline(CAKEPipeline):
                 )
                 retrieval_method = "global_unfiltered"
 
-            # 5. CAKE Conflict & Temporal Resolution Layer
+            # Check for Out-of-Domain (OOD) query: Abstain if unrecognized family and score < 0.52, or score < 0.40
+            max_score = max((c.score for c in raw_retrieved_chunks), default=0.0)
+            is_ood = (candidate_family is None and max_score < 0.52) or (max_score < 0.40)
+            if is_ood:
+                latency_ms = (time.perf_counter() - start_time) * 1000.0
+                output = BaselineOutput(
+                    question_id=question.question_id,
+                    question=question.question,
+                    snapshot_at=question.snapshot_at,
+                    asked_at=question.asked_at,
+                    answer="I could not find any relevant enterprise policy governing the requested query in the current knowledge base.",
+                    cited_clauses=[],
+                    retrieved_chunks=[],
+                    model_name=self.generator.model_name,
+                    embedding_model=self.embedding_client.model_name,
+                    top_k=self.top_k,
+                    latency_ms=latency_ms
+                )
+                output.__dict__["raw_retrieved_chunks"] = raw_retrieved_chunks
+                output.__dict__["governing_ids"] = []
+                output.__dict__["suppressed_ids"] = []
+                output.__dict__["future_ids"] = []
+                output.__dict__["has_conflict"] = False
+                output.__dict__["amo_query_cache_hit"] = query_cache_hit
+                output.__dict__["amo_context_cache_hit"] = False
+                output.__dict__["amo_retrieval_method"] = "out_of_domain_abstention"
+                output.__dict__["amo_chunks_retrieved_count"] = len(raw_retrieved_chunks)
+                output.__dict__["amo_routing_result"] = routing_res
+                return output
+
+            # 4. CAKE Conflict & Temporal Resolution Layer
             (
                 cake_chunks,
                 governing_ids,
                 suppressed_ids,
-                future_ids
+                future_ids,
+                has_conflict
             ) = self.resolve_cake_context(
                 raw_retrieved_chunks,
                 question.snapshot_at,
@@ -150,7 +180,7 @@ class AMOPipeline(CAKEPipeline):
                     governing_ids=governing_ids,
                     suppressed_ids=suppressed_ids,
                     future_ids=future_ids,
-                    has_conflict=len(cake_chunks) > 1 and any("conflict" in c.clause_id.lower() for c in cake_chunks),
+                    has_conflict=has_conflict,
                     policy_family=candidate_family,
                     snapshot_at=question.snapshot_at,
                     intent_signature=intent_sig
@@ -163,7 +193,7 @@ class AMOPipeline(CAKEPipeline):
                     user_context=user_ctx_dict
                 )
 
-        # 6. LLM Generation conditioned strictly on CAKE-resolved context
+        # 5. LLM Generation conditioned strictly on CAKE-resolved context
         gen_result = self.generator.generate(
             question=question.question,
             chunks=cake_chunks,
@@ -193,6 +223,7 @@ class AMOPipeline(CAKEPipeline):
         output.__dict__["governing_ids"] = governing_ids
         output.__dict__["suppressed_ids"] = suppressed_ids
         output.__dict__["future_ids"] = future_ids
+        output.__dict__["has_conflict"] = has_conflict
         output.__dict__["amo_query_cache_hit"] = query_cache_hit
         output.__dict__["amo_context_cache_hit"] = context_cache_hit
         output.__dict__["amo_retrieval_method"] = retrieval_method

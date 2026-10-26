@@ -122,7 +122,7 @@ def main():
     questions_path = data_dir / "evaluation" / "development" / "questions.jsonl"
 
     timestamp_str = datetime.now().strftime("%Y%m%d_%H%M%S")
-    results_dir = Path("d:/BTech Project Antigravity/results/amo") / f"smoke_run_{timestamp_str}"
+    results_dir = Path("d:/BTech Project Antigravity - Copy/results/amo") / f"smoke_run_{timestamp_str}"
     results_dir.mkdir(parents=True, exist_ok=True)
 
     print("=" * 80)
@@ -159,7 +159,7 @@ def main():
 
     # Load Phase 2 answers for consistency verification
     phase2_answers_dict = {}
-    phase2_dir_candidates = sorted(Path("d:/BTech Project Antigravity/results/cake").glob("smoke_run_*"), reverse=True)
+    phase2_dir_candidates = sorted(Path("d:/BTech Project Antigravity - Copy/results/cake").glob("smoke_run_*"), reverse=True)
     for cand in phase2_dir_candidates:
         phase2_file = cand / "answers.jsonl"
         if phase2_file.exists():
@@ -188,19 +188,34 @@ def main():
     print(f"  Warm Mean Retrieved Chunks: {warm_results['mean_chunks_retrieved']:.2f} (vs 5.0 baseline)")
     print(f"  Warm Context Cache Hit Rate: {warm_results['context_cache_hit_rate']*100:.1f}%\n")
 
-    # 5. AGGREGATE WORKLOAD EVALUATION (50% Cold / 50% Warm)
-    total_agg_q = len(eval_questions) * 2
-    agg_mean_latency = (cold_results["mean_latency_ms"] + warm_results["mean_latency_ms"]) / 2.0
-    agg_mean_chunks = (cold_results["mean_chunks_retrieved"] + warm_results["mean_chunks_retrieved"]) / 2.0
-    agg_ctx_hit_rate = (cold_results["context_cache_hit_rate"] + warm_results["context_cache_hit_rate"]) / 2.0
-    agg_emb_hit_rate = (cold_results["query_cache_hit_rate"] + warm_results["query_cache_hit_rate"]) / 2.0
-
+    # 5. AGGREGATE & PARAMETRIC WORKLOAD EVALUATION
     # Phase 2 reference values
     phase2_mean_latency = 174.63  # ms (from Phase 2 summary.json)
     phase2_mean_retrieved_chunks = 5.0  # Top-5 global search
 
-    retrieval_volume_reduction = ((phase2_mean_retrieved_chunks - agg_mean_chunks) / phase2_mean_retrieved_chunks) * 100.0
-    latency_reduction = ((phase2_mean_latency - agg_mean_latency) / phase2_mean_latency) * 100.0
+    # Parametric Workload Sensitivity Analysis across query repetition rates alpha
+    repetition_rates = [0.0, 0.10, 0.25, 0.50, 0.75, 1.0]
+    parametric_results = {}
+    for alpha in repetition_rates:
+        lat = (1.0 - alpha) * cold_results["mean_latency_ms"] + alpha * warm_results["mean_latency_ms"]
+        lat_red = ((phase2_mean_latency - lat) / phase2_mean_latency) * 100.0
+        chunks = (1.0 - alpha) * cold_results["mean_chunks_retrieved"] + alpha * warm_results["mean_chunks_retrieved"]
+        vol_red = ((phase2_mean_retrieved_chunks - chunks) / phase2_mean_retrieved_chunks) * 100.0
+        parametric_results[f"{int(alpha * 100)}%"] = {
+            "repetition_rate": alpha,
+            "mean_latency_ms": round(lat, 2),
+            "latency_reduction_pct": round(lat_red, 2),
+            "mean_chunks_retrieved": round(chunks, 2),
+            "retrieval_volume_reduction_pct": round(vol_red, 2)
+        }
+
+    # Aggregate at 50% baseline mix
+    agg_mean_latency = parametric_results["50%"]["mean_latency_ms"]
+    agg_mean_chunks = parametric_results["50%"]["mean_chunks_retrieved"]
+    agg_ctx_hit_rate = (cold_results["context_cache_hit_rate"] + warm_results["context_cache_hit_rate"]) / 2.0
+    agg_emb_hit_rate = (cold_results["query_cache_hit_rate"] + warm_results["query_cache_hit_rate"]) / 2.0
+    latency_reduction = parametric_results["50%"]["latency_reduction_pct"]
+    retrieval_volume_reduction = parametric_results["50%"]["retrieval_volume_reduction_pct"]
 
     # Answer Consistency Check
     matching_answers = 0
@@ -266,7 +281,8 @@ def main():
             "evidence_recall": warm_results["evidence_recall"],
             "evidence_precision": warm_results["evidence_precision"],
             "answer_consistency_vs_phase2_pct": consistency_rate
-        }
+        },
+        "parametric_sensitivity": parametric_results
     }
 
     with open(results_dir / "summary.json", "w", encoding="utf-8") as f:
@@ -305,7 +321,16 @@ def main():
     print(f"{'Embedding Cache Hit Rate (Warm)':<34} | {'N/A':<16} | {'N/A':<14} | {emb_hit_str:<14}")
     print("=" * 80)
 
-    # 8. Print Real Cache Hit Trace Sample
+    # 8. Print Parametric Sensitivity Curve
+    print("\nPARAMETRIC SENSITIVITY CURVE (Across Query Repetition Rate alpha):")
+    print("=" * 100)
+    print(f"{'Repetition Rate (alpha)':<25} | {'Mean Latency':<15} | {'Latency Reduction':<20} | {'Mean Chunks':<15} | {'Volume Reduction':<18}")
+    print("-" * 100)
+    for alpha_str, pdata in parametric_results.items():
+        print(f"{alpha_str:<25} | {pdata['mean_latency_ms']:<12.2f} ms | {pdata['latency_reduction_pct']:<19.2f}% | {pdata['mean_chunks_retrieved']:<15.2f} | {pdata['retrieval_volume_reduction_pct']:<17.2f}%")
+    print("=" * 100)
+
+    # 9. Print Real Cache Hit Trace Sample
     print("\nSAMPLE REAL EXECUTION TRACE (Q001 Warm Pass Cache Hit):")
     sample_trace = warm_results["traces"][0]
     print(f"  Query                   : {sample_trace['question']}")

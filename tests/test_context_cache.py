@@ -123,3 +123,39 @@ def test_context_cache_disk_persistence():
         assert loaded is not None
         assert loaded.governing_ids == ["D203#C1"]
         assert loaded.governing_chunks[0].text == "Pune meal ceiling INR 250"
+
+
+def test_intent_signature_paraphrase_equivalence():
+    """Paraphrased queries within the same family, snapshot, and topic must produce identical intent signatures."""
+    snapshot = "2026-08-01T23:59:59Z"
+    uctx = {"locations": ["Pune", "Mumbai"], "conditions": []}
+
+    sig1 = compute_intent_signature("What is the current weekly remote-work maximum?", snapshot, user_context=uctx)
+    sig2 = compute_intent_signature("How many remote days per week are allowed right now?", snapshot, user_context=uctx)
+    assert sig1 == sig2, f"Paraphrases must yield identical intent signature: {sig1} vs {sig2}"
+
+
+def test_context_cache_atomic_write_safety():
+    """Verify that ContextCache writes atomically without leaving corrupt temp files."""
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        cache = ContextCache(cache_dir=tmp_dir)
+        chunk = _make_dummy_chunk("D101#C1", "D101", "2 days remote allowed")
+        ctx = CachedCAKEContext(
+            governing_chunks=[chunk],
+            governing_ids=["D101#C1"],
+            suppressed_ids=[],
+            future_ids=[],
+            has_conflict=False,
+            policy_family="remote_work",
+            snapshot_at="2026-06-20T23:59:59Z",
+            intent_signature="sig_test"
+        )
+        cache.set("2026-06-20T23:59:59Z", "remote_work", "What is the remote work policy?", ctx)
+
+        # Ensure no dangling .tmp files exist
+        tmp_files = list(cache.cache_dir.glob("*.tmp"))
+        assert len(tmp_files) == 0, f"Found dangling temporary files: {tmp_files}"
+        
+        # Ensure json file exists and is valid
+        json_files = list(cache.cache_dir.glob("*.json"))
+        assert len(json_files) == 1

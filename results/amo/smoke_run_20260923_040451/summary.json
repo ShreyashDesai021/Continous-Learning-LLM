@@ -1,0 +1,31 @@
+{
+  "timestamp": "20260923_040451",
+  "total_questions_per_pass": 8,
+  "cold_pass": {
+    "mean_latency_ms": 165.3711250037304,
+    "query_cache_hit_rate": 0.0,
+    "context_cache_hit_rate": 0.0,
+    "mean_chunks_retrieved": 5.0,
+    "governing_clause_accuracy": 1.0
+  },
+  "warm_pass": {
+    "mean_latency_ms": 0.15051250375108793,
+    "query_cache_hit_rate": 1.0,
+    "context_cache_hit_rate": 1.0,
+    "mean_chunks_retrieved": 0.0,
+    "governing_clause_accuracy": 1.0
+  },
+  "aggregate": {
+    "mean_latency_ms": 82.76081875374075,
+    "latency_reduction_vs_phase2_pct": 52.607903135921234,
+    "mean_chunks_retrieved_after_amo": 2.5,
+    "retrieval_volume_reduction_pct": 50.0,
+    "context_cache_hit_rate": 0.5,
+    "embedding_cache_hit_rate": 0.5,
+    "governing_clause_accuracy": 1.0,
+    "outdated_answer_rate": 0.0,
+    "evidence_recall": 1.0,
+    "evidence_precision": 0.825,
+    "answer_consistency_vs_phase2_pct": 100.0
+  }
+}

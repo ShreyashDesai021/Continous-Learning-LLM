@@ -62,3 +62,13 @@ def test_routing_multi_match_with_clear_dominant_winner():
     assert res.candidate_family == "remote_work"
     assert res.confidence >= 0.70
     assert not res.fallback_to_global
+
+
+def test_routing_fallback_on_diluted_multi_family_match():
+    """When top score is 3.0, but 3 other families each have 1.0 (total 6.0), conf=0.50 < 0.70 -> fallback."""
+    router = FamilyRouter(confidence_threshold=0.70)
+    # remote-work terms (wfh, telecommute, hybrid = 3.0) + meals (lunch = 1.0) + backup (archive = 1.0) + deploy (release = 1.0)
+    query = "For wfh, telecommute, and hybrid staff, what are the lunch rules during an archive release?"
+    res = router.route_query(query)
+    assert res.fallback_to_global, f"Expected fallback due to multi-family dilution, got candidate: {res.candidate_family}"
+    assert res.confidence < 0.70

@@ -3,6 +3,8 @@
 import json
 import hashlib
 import re
+import os
+import uuid
 from pathlib import Path
 from collections import OrderedDict
 from dataclasses import dataclass, asdict
@@ -53,6 +55,27 @@ class CachedCAKEContext:
         )
 
 
+DOMAIN_PREDICATES = {
+    "REVIEWERS": ["reviewer", "reviewers", "approval", "approver", "approvals"],
+    "HEALTH": ["health", "health check", "healthcheck"],
+    "LOGS": ["log", "logs", "logging"],
+    "RECORDKEEPING": ["ticket", "record", "recording", "service-desk", "incident"],
+    "DEADLINE": ["deadline", "turnaround", "hours", "response time", "sla"],
+    "CEILING": ["ceiling", "claim", "reimbursement", "meal allowance", "cost", "limit"],
+    "ALLOWANCE": ["days", "allowance", "remote", "wfh", "telecommute", "remote-work", "maximum"],
+    "FAQ_INTERPRETATION": ["faq", "clarification", "informal"],
+    "NOTICE_AMENDMENT": ["notice", "amendment", "memo", "settle", "disputed"]
+}
+
+STOPWORDS = {
+    "what", "is", "the", "are", "how", "many", "can", "i", "we", "for", "in", "at", 
+    "to", "of", "a", "an", "on", "as", "per", "policy", "tell", "me", "about", 
+    "please", "rules", "rule", "does", "do", "apply", "applies", "allowed", "allow", 
+    "today", "currently", "now", "current", "working", "work", "which", "and", "or",
+    "there", "any", "be", "with", "after", "before", "between", "from", "since", "under"
+}
+
+
 def compute_intent_signature(
     question_text: str,
     snapshot_at: str,
@@ -63,9 +86,9 @@ def compute_intent_signature(
     Encodes:
     1. Temporal target (historical date vs current snapshot).
     2. Geographic scope (Pune vs Mumbai vs General).
-    3. Condition scope (Dev vs Prod, Reviewers vs Health Check).
+    3. Condition scope (Dev vs Prod, Reviewers vs Health Check, Allowance vs Ceiling).
     4. Query mode (single governing vs history sequence vs contradiction comparison).
-    5. Normalized query pattern.
+    5. Canonical domain predicate pattern (invariant under paraphrasing).
     """
     text_lower = question_text.lower()
 
@@ -89,16 +112,11 @@ def compute_intent_signature(
         conds.append("DEV")
     elif "production" in text_lower or "prod" in text_lower:
         conds.append("PROD")
-    if "reviewer" in text_lower or "approval" in text_lower:
-        conds.append("REVIEWERS")
-    if "health" in text_lower:
-        conds.append("HEALTH")
-    if "log" in text_lower:
-        conds.append("LOGS")
-    if "ticket" in text_lower or "record" in text_lower:
-        conds.append("RECORDKEEPING")
-    if "deadline" in text_lower:
-        conds.append("DEADLINE")
+
+    for pred_name, kws in DOMAIN_PREDICATES.items():
+        if any(kw in text_lower for kw in kws):
+            conds.append(pred_name)
+
     sigma_cond = ",".join(sorted(conds)) if conds else "DEFAULT"
 
     # 3. Query Mode
@@ -109,13 +127,16 @@ def compute_intent_signature(
     else:
         mu_mode = "GOVERNING_SINGLE"
 
-    # 4. Normalized Query Pattern
-    clean_text = re.sub(r"[^a-z0-9]+", " ", text_lower).strip()
-    clean_text = re.sub(r"\s+", " ", clean_text)
-    rho_norm = hashlib.md5(clean_text.encode("utf-8")).hexdigest()[:12]
+    # 4. Canonical Intent Pattern (paraphrase invariant)
+    if conds:
+        rho_pattern = ",".join(sorted(conds))
+    else:
+        # Fallback to normalized content words only if no domain predicate matched
+        clean_words = [w for w in re.findall(r"[a-z0-9]+", text_lower) if w not in STOPWORDS and len(w) > 2]
+        rho_pattern = "-".join(sorted(set(clean_words))) if clean_words else "DEFAULT"
 
     # Combine into deterministic compound signature
-    raw_sig = f"{tau}|{sigma_loc}|{sigma_cond}|{mu_mode}|{rho_norm}"
+    raw_sig = f"{tau}|{sigma_loc}|{sigma_cond}|{mu_mode}|{rho_pattern}"
     return hashlib.sha256(raw_sig.encode("utf-8")).hexdigest()[:16]
 
 
@@ -213,11 +234,11 @@ class ContextCache:
         context: CachedCAKEContext,
         user_context: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Stores context in both in-memory LRU and persistent JSON file."""
+        """Stores context in both in-memory LRU and persistent JSON file atomically."""
         intent_sig = compute_intent_signature(question_text, snapshot_at, user_context)
         self._put_memory(snapshot_at, policy_family, intent_sig, context)
 
-        # Update disk persistence
+        # Update disk persistence atomically
         disk_file = self._get_family_cache_file(snapshot_at, policy_family)
         disk_data = {}
         if disk_file.exists():
@@ -228,11 +249,17 @@ class ContextCache:
                 disk_data = {}
 
         disk_data[intent_sig] = context.to_dict()
+        tmp_file = self.cache_dir / f"{disk_file.stem}_{os.getpid()}_{uuid.uuid4().hex[:8]}.tmp"
         try:
-            with open(disk_file, "w", encoding="utf-8") as f:
+            with open(tmp_file, "w", encoding="utf-8") as f:
                 json.dump(disk_data, f, indent=2)
+            os.replace(tmp_file, disk_file)
         except Exception:
-            pass
+            if tmp_file.exists():
+                try:
+                    tmp_file.unlink()
+                except Exception:
+                    pass
 
     def clear(self, clear_disk: bool = False) -> None:
         """Clears memory cache and resets hit counters; optionally removes disk files."""

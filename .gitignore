@@ -6,12 +6,17 @@ __pycache__/
 # Pytest
 .pytest_cache/
 
-# Storage weights and Qdrant database locks
+# Storage weights, caches, and Qdrant database
 storage/models/
 storage/vector_cache/
 storage/qdrant_storage/
+storage/context_cache/
+storage/query_embedding_cache/
 
 # Environment
 .env
 venv/
 .venv/
+
+# Scratch / temporary files
+scratch/

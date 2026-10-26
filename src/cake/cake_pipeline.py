@@ -20,7 +20,7 @@ class CAKEPipeline(ConventionalRAGPipeline):
         retrieved_chunks: List[RetrievedChunk],
         snapshot_at: str,
         question_text: str = ""
-    ) -> Tuple[List[RetrievedChunk], List[str], List[str], List[str]]:
+    ) -> Tuple[List[RetrievedChunk], List[str], List[str], List[str], bool]:
         """
         Applies CAKE resolution across retrieved chunks:
         1. Groups chunks by policy family and scope.
@@ -29,6 +29,7 @@ class CAKEPipeline(ConventionalRAGPipeline):
         4. Excludes future-effective versions from current governing context.
         5. Preserves competing clauses for genuine unresolved conflicts.
         6. Preserves complete chronology for history chain queries.
+        7. Returns has_conflict flag indicating whether an unresolved conflict exists.
         """
         from src.cake.temporal_selector import detect_target_date
 
@@ -40,6 +41,7 @@ class CAKEPipeline(ConventionalRAGPipeline):
         governing_ids: List[str] = []
         suppressed_ids: List[str] = []
         future_ids: List[str] = []
+        has_any_conflict: bool = False
 
         for family_key, chunks in family_groups.items():
             if is_history_chain:
@@ -64,6 +66,7 @@ class CAKEPipeline(ConventionalRAGPipeline):
                 future_ids.append(fut.clause_id)
 
             if conflict_res.has_conflict:
+                has_any_conflict = True
                 # Genuinely unresolved conflict: preserve competing clauses so model can report disagreement
                 for comp in conflict_res.competing_clauses:
                     resolved_chunks.append(comp)
@@ -74,7 +77,7 @@ class CAKEPipeline(ConventionalRAGPipeline):
 
         # Preserve relative ranking order from original retrieval
         final_chunks = [c for c in retrieved_chunks if c in resolved_chunks]
-        return final_chunks, governing_ids, suppressed_ids, future_ids
+        return final_chunks, governing_ids, suppressed_ids, future_ids, has_any_conflict
 
     def run_query(self, question: Question) -> BaselineOutput:
         """Executes CAKE-filtered RAG workflow for a given question."""
@@ -96,7 +99,8 @@ class CAKEPipeline(ConventionalRAGPipeline):
             cake_chunks,
             governing_ids,
             suppressed_ids,
-            future_ids
+            future_ids,
+            has_conflict
         ) = self.resolve_cake_context(
             raw_retrieved_chunks, 
             question.snapshot_at,
@@ -132,5 +136,6 @@ class CAKEPipeline(ConventionalRAGPipeline):
         output.__dict__["governing_ids"] = governing_ids
         output.__dict__["suppressed_ids"] = suppressed_ids
         output.__dict__["future_ids"] = future_ids
+        output.__dict__["has_conflict"] = has_conflict
 
         return output

@@ -1,0 +1,49 @@
+{
+  "total_questions": 8,
+  "mean_accuracy": 0.25,
+  "mean_required_claim_coverage": 0.25,
+  "forbidden_claim_violation_rate": 0.25,
+  "mean_evidence_recall": 1.0,
+  "mean_evidence_precision": 0.4,
+  "outdated_answer_rate": 0.25,
+  "conflict_handling_rate": 1.0,
+  "mean_latency_ms": 362.4153375130845,
+  "category_breakdown": {
+    "future_effective": {
+      "count": 1,
+      "accuracy": 0.0,
+      "evidence_recall": 1.0,
+      "evidence_precision": 0.4
+    },
+    "historical": {
+      "count": 1,
+      "accuracy": 0.0,
+      "evidence_recall": 1.0,
+      "evidence_precision": 0.4
+    },
+    "current": {
+      "count": 3,
+      "accuracy": 0.6666666666666666,
+      "evidence_recall": 1.0,
+      "evidence_precision": 0.3333333333333333
+    },
+    "history_chain": {
+      "count": 1,
+      "accuracy": 0.0,
+      "evidence_recall": 1.0,
+      "evidence_precision": 0.6
+    },
+    "duplicate": {
+      "count": 1,
+      "accuracy": 0.0,
+      "evidence_recall": 1.0,
+      "evidence_precision": 0.4
+    },
+    "scope_difference": {
+      "count": 1,
+      "accuracy": 0.0,
+      "evidence_recall": 1.0,
+      "evidence_precision": 0.4
+    }
+  }
+}

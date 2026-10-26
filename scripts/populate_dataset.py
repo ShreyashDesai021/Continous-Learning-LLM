@@ -6,7 +6,7 @@ Creates all 20 development documents, metadata, questions, and ground-truth answ
 import json
 from pathlib import Path
 
-BASE_DIR = Path("d:/BTech Project Antigravity/data")
+BASE_DIR = Path("d:/BTech Project Antigravity - Copy/data")
 
 # 1. Directory Structure
 DOCS_DIR = BASE_DIR / "inference" / "development" / "documents"

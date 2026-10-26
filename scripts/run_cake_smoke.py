@@ -39,7 +39,7 @@ def main():
     questions_path = data_dir / "evaluation" / "development" / "questions.jsonl"
 
     timestamp_str = datetime.now().strftime("%Y%m%d_%H%M%S")
-    results_dir = Path("d:/BTech Project Antigravity/results/cake") / f"smoke_run_{timestamp_str}"
+    results_dir = Path("d:/BTech Project Antigravity - Copy/results/cake") / f"smoke_run_{timestamp_str}"
     results_dir.mkdir(parents=True, exist_ok=True)
 
     print("=" * 70)

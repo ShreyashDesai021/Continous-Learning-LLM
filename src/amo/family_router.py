@@ -117,13 +117,14 @@ class FamilyRouter:
                     fallback_to_global=True
                 )
             
-            # Confidence ratio
-            conf = top_score / (top_score + second_score)
+            # Confidence ratio across all competing matched families
+            total_score = sum(scores.values())
+            conf = top_score / total_score if total_score > 0 else 0.0
             if conf < self.confidence_threshold:
                 return RoutingResult(
                     candidate_family=None,
                     confidence=round(conf, 3),
-                    reason=f"low_confidence_cross_family_{top_family}_and_{second_family}",
+                    reason=f"low_confidence_cross_family_{top_family}_and_competitors",
                     scores=scores,
                     fallback_to_global=True
                 )

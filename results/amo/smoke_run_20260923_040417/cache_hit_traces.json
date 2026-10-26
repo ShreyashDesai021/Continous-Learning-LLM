@@ -1,0 +1,496 @@
+{
+  "cold_traces": [
+    {
+      "question_id": "Q001",
+      "question": "How many remote days per week are allowed today, and is a change already announced?",
+      "snapshot_at": "2026-06-20T23:59:59Z",
+      "query_cache_hit": false,
+      "family_router": {
+        "candidate_family": "remote_work",
+        "confidence": 1.0,
+        "fallback_to_global": false,
+        "reason": "single_family_exact_match"
+      },
+      "context_cache_hit": false,
+      "retrieval_method": "family_filtered_remote_work",
+      "chunks_retrieved_count": 5,
+      "governing_clauses": [
+        "D102#C1"
+      ],
+      "suppressed_clauses": [
+        "D101#C1"
+      ],
+      "future_clauses": [
+        "D103#C1",
+        "D104#C1",
+        "D103#C2"
+      ],
+      "final_answer": "Based on retrieved evidence: From 1 February 2026, permanent employees may work remotely for a maximum of three days per week.",
+      "cited_clauses": [
+        "D102#C1"
+      ],
+      "latency_ms": 444.8075999971479
+    },
+    {
+      "question_id": "Q002",
+      "question": "What was the remote-work allowance throughout 2025?",
+      "snapshot_at": "2026-08-01T23:59:59Z",
+      "query_cache_hit": false,
+      "family_router": {
+        "candidate_family": "remote_work",
+        "confidence": 1.0,
+        "fallback_to_global": false,
+        "reason": "single_family_exact_match"
+      },
+      "context_cache_hit": false,
+      "retrieval_method": "family_filtered_remote_work",
+      "chunks_retrieved_count": 5,
+      "governing_clauses": [
+        "D101#C1"
+      ],
+      "suppressed_clauses": [
+        "D101#C2",
+        "D101#C3"
+      ],
+      "future_clauses": [
+        "D103#C1",
+        "D102#C1"
+      ],
+      "final_answer": "Based on retrieved evidence: Permanent employees may work remotely for a maximum of two days per week.",
+      "cited_clauses": [
+        "D101#C1"
+      ],
+      "latency_ms": 474.1607999894768
+    },
+    {
+      "question_id": "Q003",
+      "question": "What is the current weekly remote-work maximum?",
+      "snapshot_at": "2026-08-01T23:59:59Z",
+      "query_cache_hit": false,
+      "family_router": {
+        "candidate_family": "remote_work",
+        "confidence": 1.0,
+        "fallback_to_global": false,
+        "reason": "single_family_exact_match"
+      },
+      "context_cache_hit": false,
+      "retrieval_method": "family_filtered_remote_work",
+      "chunks_retrieved_count": 5,
+      "governing_clauses": [
+        "D103#C1"
+      ],
+      "suppressed_clauses": [
+        "D102#C1",
+        "D101#C1",
+        "D104#C1",
+        "D103#C3"
+      ],
+      "future_clauses": [],
+      "final_answer": "Based on retrieved evidence: From 1 July 2026, permanent employees may work remotely for a maximum of four days per week.",
+      "cited_clauses": [
+        "D103#C1"
+      ],
+      "latency_ms": 12.385600013658404
+    },
+    {
+      "question_id": "Q004",
+      "question": "Give the sequence of remote-work allowances and their start dates since January 2025.",
+      "snapshot_at": "2026-08-01T23:59:59Z",
+      "query_cache_hit": false,
+      "family_router": {
+        "candidate_family": "remote_work",
+        "confidence": 1.0,
+        "fallback_to_global": false,
+        "reason": "single_family_exact_match"
+      },
+      "context_cache_hit": false,
+      "retrieval_method": "family_filtered_remote_work",
+      "chunks_retrieved_count": 5,
+      "governing_clauses": [
+        "D101#C2",
+        "D102#C1",
+        "D103#C1",
+        "D101#C3",
+        "D101#C1"
+      ],
+      "suppressed_clauses": [],
+      "future_clauses": [],
+      "final_answer": "Based on retrieved evidence: This policy applies to the Pune and Mumbai offices from 1 January 2025.",
+      "cited_clauses": [
+        "D101#C2",
+        "D102#C1"
+      ],
+      "latency_ms": 13.369399996008724
+    },
+    {
+      "question_id": "Q005",
+      "question": "Does the July FAQ create an additional remote-work allowance?",
+      "snapshot_at": "2026-08-01T23:59:59Z",
+      "query_cache_hit": false,
+      "family_router": {
+        "candidate_family": "remote_work",
+        "confidence": 1.0,
+        "fallback_to_global": false,
+        "reason": "single_family_exact_match"
+      },
+      "context_cache_hit": false,
+      "retrieval_method": "family_filtered_remote_work",
+      "chunks_retrieved_count": 5,
+      "governing_clauses": [
+        "D104#C2"
+      ],
+      "suppressed_clauses": [
+        "D102#C1",
+        "D104#C3",
+        "D104#C1",
+        "D103#C1"
+      ],
+      "future_clauses": [],
+      "final_answer": "Based on retrieved evidence: This FAQ explains the Remote Working Policy version 3.0 provisions.",
+      "cited_clauses": [
+        "D104#C2"
+      ],
+      "latency_ms": 13.880999991670251
+    },
+    {
+      "question_id": "Q006",
+      "question": "What is the meal ceiling for a Pune employee working after 21:00?",
+      "snapshot_at": "2026-07-01T23:59:59Z",
+      "query_cache_hit": false,
+      "family_router": {
+        "candidate_family": "office_meals",
+        "confidence": 1.0,
+        "fallback_to_global": false,
+        "reason": "single_family_exact_match"
+      },
+      "context_cache_hit": false,
+      "retrieval_method": "family_filtered_office_meals",
+      "chunks_retrieved_count": 5,
+      "governing_clauses": [
+        "D203#C1",
+        "D204#C1"
+      ],
+      "suppressed_clauses": [
+        "D201#C1",
+        "D203#C2",
+        "D201#C2"
+      ],
+      "future_clauses": [],
+      "final_answer": "Based on retrieved evidence: For Pune staff who work beyond 9 p.m., the reimbursement ceiling is INR 250 for a single meal on that working day.",
+      "cited_clauses": [
+        "D203#C1",
+        "D204#C1"
+      ],
+      "latency_ms": 394.1223000001628
+    },
+    {
+      "question_id": "Q007",
+      "question": "What can a Mumbai employee claim for one meal after working beyond 21:00?",
+      "snapshot_at": "2026-07-01T23:59:59Z",
+      "query_cache_hit": false,
+      "family_router": {
+        "candidate_family": "office_meals",
+        "confidence": 1.0,
+        "fallback_to_global": false,
+        "reason": "single_family_exact_match"
+      },
+      "context_cache_hit": false,
+      "retrieval_method": "family_filtered_office_meals",
+      "chunks_retrieved_count": 5,
+      "governing_clauses": [
+        "D204#C1",
+        "D201#C1"
+      ],
+      "suppressed_clauses": [
+        "D202#C1",
+        "D202#C2",
+        "D204#C2"
+      ],
+      "future_clauses": [],
+      "final_answer": "Based on retrieved evidence: From 15 June 2026, the meal reimbursement ceiling for Mumbai employees working after 21:00 is INR 400 per eligible working day.",
+      "cited_clauses": [
+        "D204#C1",
+        "D201#C1"
+      ],
+      "latency_ms": 7.593999995151535
+    },
+    {
+      "question_id": "Q008",
+      "question": "Do the current Pune and Mumbai meal ceilings contradict each other?",
+      "snapshot_at": "2026-07-01T23:59:59Z",
+      "query_cache_hit": false,
+      "family_router": {
+        "candidate_family": "office_meals",
+        "confidence": 1.0,
+        "fallback_to_global": false,
+        "reason": "single_family_exact_match"
+      },
+      "context_cache_hit": false,
+      "retrieval_method": "family_filtered_office_meals",
+      "chunks_retrieved_count": 5,
+      "governing_clauses": [
+        "D203#C1",
+        "D204#C1"
+      ],
+      "suppressed_clauses": [
+        "D203#C2",
+        "D202#C1",
+        "D204#C2"
+      ],
+      "future_clauses": [],
+      "final_answer": "Based on retrieved evidence: For Pune staff who work beyond 9 p.m., the reimbursement ceiling is INR 250 for a single meal on that working day.",
+      "cited_clauses": [
+        "D203#C1",
+        "D204#C1"
+      ],
+      "latency_ms": 7.497100014006719
+    }
+  ],
+  "warm_traces": [
+    {
+      "question_id": "Q001",
+      "question": "How many remote days per week are allowed today, and is a change already announced?",
+      "snapshot_at": "2026-06-20T23:59:59Z",
+      "query_cache_hit": true,
+      "family_router": {
+        "candidate_family": "remote_work",
+        "confidence": 1.0,
+        "fallback_to_global": false,
+        "reason": "single_family_exact_match"
+      },
+      "context_cache_hit": true,
+      "retrieval_method": "context_cache_hit",
+      "chunks_retrieved_count": 0,
+      "governing_clauses": [
+        "D102#C1"
+      ],
+      "suppressed_clauses": [
+        "D101#C1"
+      ],
+      "future_clauses": [
+        "D103#C1",
+        "D104#C1",
+        "D103#C2"
+      ],
+      "final_answer": "Based on retrieved evidence: From 1 February 2026, permanent employees may work remotely for a maximum of three days per week.",
+      "cited_clauses": [
+        "D102#C1"
+      ],
+      "latency_ms": 0.1509999856352806
+    },
+    {
+      "question_id": "Q002",
+      "question": "What was the remote-work allowance throughout 2025?",
+      "snapshot_at": "2026-08-01T23:59:59Z",
+      "query_cache_hit": true,
+      "family_router": {
+        "candidate_family": "remote_work",
+        "confidence": 1.0,
+        "fallback_to_global": false,
+        "reason": "single_family_exact_match"
+      },
+      "context_cache_hit": true,
+      "retrieval_method": "context_cache_hit",
+      "chunks_retrieved_count": 0,
+      "governing_clauses": [
+        "D101#C1"
+      ],
+      "suppressed_clauses": [
+        "D101#C2",
+        "D101#C3"
+      ],
+      "future_clauses": [
+        "D103#C1",
+        "D102#C1"
+      ],
+      "final_answer": "Based on retrieved evidence: Permanent employees may work remotely for a maximum of two days per week.",
+      "cited_clauses": [
+        "D101#C1"
+      ],
+      "latency_ms": 0.09050001972354949
+    },
+    {
+      "question_id": "Q003",
+      "question": "What is the current weekly remote-work maximum?",
+      "snapshot_at": "2026-08-01T23:59:59Z",
+      "query_cache_hit": true,
+      "family_router": {
+        "candidate_family": "remote_work",
+        "confidence": 1.0,
+        "fallback_to_global": false,
+        "reason": "single_family_exact_match"
+      },
+      "context_cache_hit": true,
+      "retrieval_method": "context_cache_hit",
+      "chunks_retrieved_count": 0,
+      "governing_clauses": [
+        "D103#C1"
+      ],
+      "suppressed_clauses": [
+        "D102#C1",
+        "D101#C1",
+        "D104#C1",
+        "D103#C3"
+      ],
+      "future_clauses": [],
+      "final_answer": "Based on retrieved evidence: From 1 July 2026, permanent employees may work remotely for a maximum of four days per week.",
+      "cited_clauses": [
+        "D103#C1"
+      ],
+      "latency_ms": 0.08060000254772604
+    },
+    {
+      "question_id": "Q004",
+      "question": "Give the sequence of remote-work allowances and their start dates since January 2025.",
+      "snapshot_at": "2026-08-01T23:59:59Z",
+      "query_cache_hit": true,
+      "family_router": {
+        "candidate_family": "remote_work",
+        "confidence": 1.0,
+        "fallback_to_global": false,
+        "reason": "single_family_exact_match"
+      },
+      "context_cache_hit": true,
+      "retrieval_method": "context_cache_hit",
+      "chunks_retrieved_count": 0,
+      "governing_clauses": [
+        "D101#C2",
+        "D102#C1",
+        "D103#C1",
+        "D101#C3",
+        "D101#C1"
+      ],
+      "suppressed_clauses": [],
+      "future_clauses": [],
+      "final_answer": "Based on retrieved evidence: This policy applies to the Pune and Mumbai offices from 1 January 2025.",
+      "cited_clauses": [
+        "D101#C2",
+        "D102#C1"
+      ],
+      "latency_ms": 0.09640000644139946
+    },
+    {
+      "question_id": "Q005",
+      "question": "Does the July FAQ create an additional remote-work allowance?",
+      "snapshot_at": "2026-08-01T23:59:59Z",
+      "query_cache_hit": true,
+      "family_router": {
+        "candidate_family": "remote_work",
+        "confidence": 1.0,
+        "fallback_to_global": false,
+        "reason": "single_family_exact_match"
+      },
+      "context_cache_hit": true,
+      "retrieval_method": "context_cache_hit",
+      "chunks_retrieved_count": 0,
+      "governing_clauses": [
+        "D104#C2"
+      ],
+      "suppressed_clauses": [
+        "D102#C1",
+        "D104#C3",
+        "D104#C1",
+        "D103#C1"
+      ],
+      "future_clauses": [],
+      "final_answer": "Based on retrieved evidence: This FAQ explains the Remote Working Policy version 3.0 provisions.",
+      "cited_clauses": [
+        "D104#C2"
+      ],
+      "latency_ms": 0.0805000017862767
+    },
+    {
+      "question_id": "Q006",
+      "question": "What is the meal ceiling for a Pune employee working after 21:00?",
+      "snapshot_at": "2026-07-01T23:59:59Z",
+      "query_cache_hit": true,
+      "family_router": {
+        "candidate_family": "office_meals",
+        "confidence": 1.0,
+        "fallback_to_global": false,
+        "reason": "single_family_exact_match"
+      },
+      "context_cache_hit": true,
+      "retrieval_method": "context_cache_hit",
+      "chunks_retrieved_count": 0,
+      "governing_clauses": [
+        "D203#C1",
+        "D204#C1"
+      ],
+      "suppressed_clauses": [
+        "D201#C1",
+        "D203#C2",
+        "D201#C2"
+      ],
+      "future_clauses": [],
+      "final_answer": "Based on retrieved evidence: For Pune staff who work beyond 9 p.m., the reimbursement ceiling is INR 250 for a single meal on that working day.",
+      "cited_clauses": [
+        "D203#C1",
+        "D204#C1"
+      ],
+      "latency_ms": 0.10179998935200274
+    },
+    {
+      "question_id": "Q007",
+      "question": "What can a Mumbai employee claim for one meal after working beyond 21:00?",
+      "snapshot_at": "2026-07-01T23:59:59Z",
+      "query_cache_hit": true,
+      "family_router": {
+        "candidate_family": "office_meals",
+        "confidence": 1.0,
+        "fallback_to_global": false,
+        "reason": "single_family_exact_match"
+      },
+      "context_cache_hit": true,
+      "retrieval_method": "context_cache_hit",
+      "chunks_retrieved_count": 0,
+      "governing_clauses": [
+        "D204#C1",
+        "D201#C1"
+      ],
+      "suppressed_clauses": [
+        "D202#C1",
+        "D202#C2",
+        "D204#C2"
+      ],
+      "future_clauses": [],
+      "final_answer": "Based on retrieved evidence: From 15 June 2026, the meal reimbursement ceiling for Mumbai employees working after 21:00 is INR 400 per eligible working day.",
+      "cited_clauses": [
+        "D204#C1",
+        "D201#C1"
+      ],
+      "latency_ms": 0.09709998266771436
+    },
+    {
+      "question_id": "Q008",
+      "question": "Do the current Pune and Mumbai meal ceilings contradict each other?",
+      "snapshot_at": "2026-07-01T23:59:59Z",
+      "query_cache_hit": true,
+      "family_router": {
+        "candidate_family": "office_meals",
+        "confidence": 1.0,
+        "fallback_to_global": false,
+        "reason": "single_family_exact_match"
+      },
+      "context_cache_hit": true,
+      "retrieval_method": "context_cache_hit",
+      "chunks_retrieved_count": 0,
+      "governing_clauses": [
+        "D203#C1",
+        "D204#C1"
+      ],
+      "suppressed_clauses": [
+        "D203#C2",
+        "D202#C1",
+        "D204#C2"
+      ],
+      "future_clauses": [],
+      "final_answer": "Based on retrieved evidence: For Pune staff who work beyond 9 p.m., the reimbursement ceiling is INR 250 for a single meal on that working day.",
+      "cited_clauses": [
+        "D203#C1",
+        "D204#C1"
+      ],
+      "latency_ms": 0.09549999958835542
+    }
+  ]
+}
