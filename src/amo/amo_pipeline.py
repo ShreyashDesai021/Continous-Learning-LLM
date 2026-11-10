@@ -24,8 +24,8 @@ class AMOPipeline(CAKEPipeline):
 
     def __init__(
         self,
-        data_dir: str = "d:/BTech Project Antigravity/data",
-        storage_dir: str = "d:/BTech Project Antigravity/storage",
+        data_dir: str = "data",
+        storage_dir: str = "runtime/research",
         embedding_model: str = "BAAI/bge-m3",
         llm_model: str = "Qwen/Qwen2.5-1.5B-Instruct",
         top_k: int = 5,

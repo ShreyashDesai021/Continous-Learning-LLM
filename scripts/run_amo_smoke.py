@@ -122,7 +122,7 @@ def main():
     questions_path = data_dir / "evaluation" / "development" / "questions.jsonl"
 
     timestamp_str = datetime.now().strftime("%Y%m%d_%H%M%S")
-    results_dir = Path("d:/BTech Project Antigravity - Copy/results/amo") / f"smoke_run_{timestamp_str}"
+    results_dir = Path("results/amo") / f"smoke_run_{timestamp_str}"
     results_dir.mkdir(parents=True, exist_ok=True)
 
     print("=" * 80)
@@ -159,7 +159,7 @@ def main():
 
     # Load Phase 2 answers for consistency verification
     phase2_answers_dict = {}
-    phase2_dir_candidates = sorted(Path("d:/BTech Project Antigravity - Copy/results/cake").glob("smoke_run_*"), reverse=True)
+    phase2_dir_candidates = sorted(Path("results/cake").glob("smoke_run_*"), reverse=True)
     for cand in phase2_dir_candidates:
         phase2_file = cand / "answers.jsonl"
         if phase2_file.exists():

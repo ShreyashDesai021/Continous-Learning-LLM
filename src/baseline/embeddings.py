@@ -8,8 +8,8 @@ from typing import List, Union
 import numpy as np
 
 # Point HuggingFace home explicitly to D: drive
-HF_STORAGE_DIR = "d:/BTech Project Antigravity/storage/models"
-os.environ["HF_HOME"] = HF_STORAGE_DIR
+HF_STORAGE_DIR = "runtime/research/models"
+os.environ.setdefault("HF_HOME", HF_STORAGE_DIR)
 os.environ["TRANSFORMERS_CACHE"] = HF_STORAGE_DIR
 
 from sentence_transformers import SentenceTransformer
@@ -32,7 +32,7 @@ class BGEM3EmbeddingClient:
         self.normalize = normalize
         
         # Local vector cache directory to prevent re-computing on identical chunks
-        self.vector_cache_dir = Path("d:/BTech Project Antigravity/storage/vector_cache")
+        self.vector_cache_dir = self.cache_dir.parent / "vector_cache"
         self.vector_cache_dir.mkdir(parents=True, exist_ok=True)
         
         self._model = None

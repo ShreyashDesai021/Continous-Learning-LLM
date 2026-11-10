@@ -20,7 +20,7 @@ class QueryCache:
 
     def __init__(
         self,
-        cache_dir: str = "d:/BTech Project Antigravity/storage/query_embedding_cache",
+        cache_dir: str = "runtime/research/query_embedding_cache",
         maxsize: int = 1000
     ):
         self.cache_dir = Path(cache_dir)

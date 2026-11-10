@@ -4,11 +4,11 @@ project:
   device: "cpu"
 
 paths:
-  data_dir: "d:/BTech Project Antigravity - Copy/data"
-  storage_dir: "d:/BTech Project Antigravity - Copy/storage"
-  models_dir: "d:/BTech Project Antigravity - Copy/storage/models"
-  qdrant_dir: "d:/BTech Project Antigravity - Copy/storage/qdrant_storage"
-  results_dir: "d:/BTech Project Antigravity - Copy/results/baseline"
+  data_dir: "data"
+  storage_dir: "runtime/research"
+  models_dir: "runtime/research/models"
+  qdrant_dir: "runtime/research/qdrant_storage"
+  results_dir: "results/baseline"
 
 embedding:
   model_name: "BAAI/bge-m3"

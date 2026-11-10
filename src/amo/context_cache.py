@@ -149,7 +149,7 @@ class ContextCache:
 
     def __init__(
         self,
-        cache_dir: str = "d:/BTech Project Antigravity/storage/context_cache",
+        cache_dir: str = "runtime/research/context_cache",
         max_entries_per_family: int = 200
     ):
         self.cache_dir = Path(cache_dir)

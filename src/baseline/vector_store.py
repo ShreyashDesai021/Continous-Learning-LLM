@@ -15,7 +15,7 @@ class LocalQdrantStore:
 
     def __init__(
         self,
-        storage_path: Optional[str] = "d:/BTech Project Antigravity/storage/qdrant_storage",
+        storage_path: Optional[str] = "runtime/research/qdrant_storage",
         dimension: int = 1024,
         distance: Distance = Distance.COSINE
     ):

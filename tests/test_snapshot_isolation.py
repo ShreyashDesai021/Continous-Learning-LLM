@@ -4,7 +4,7 @@ from pathlib import Path
 import pytest
 from src.core.snapshot import get_eligible_documents, parse_iso_timestamp
 
-DATA_DIR = Path("d:/BTech Project Antigravity/data")
+DATA_DIR = Path("data")
 META_PATH = DATA_DIR / "inference" / "development" / "metadata.jsonl"
 DOCS_DIR = DATA_DIR / "inference" / "development" / "documents"
 

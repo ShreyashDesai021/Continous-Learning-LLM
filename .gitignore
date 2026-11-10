@@ -1,22 +1,26 @@
-# Byte-compiled / optimized / DLL files
+﻿# Python
 __pycache__/
 *.py[cod]
-*$py.class
-
-# Pytest
 .pytest_cache/
-
-# Storage weights, caches, and Qdrant database
-storage/models/
-storage/vector_cache/
-storage/qdrant_storage/
-storage/context_cache/
-storage/query_embedding_cache/
-
-# Environment
-.env
-venv/
 .venv/
+venv/
 
-# Scratch / temporary files
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Local runtime, models and databases
+storage/
+runtime/
+qwen_runtime_backups/
+
+# Temporary files
 scratch/
+*.log
+.DS_Store
+Thumbs.db
+
+# Old local source backups
+*.backup-*.py
+*.before-*-*.py

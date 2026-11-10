@@ -1,0 +1,7 @@
+-r requirements.txt
+torch>=2.2,<3
+transformers>=4.45,<5
+sentence-transformers>=3,<6
+qdrant-client>=1.12,<2
+pyyaml>=6,<7
+accelerate>=0.30,<2

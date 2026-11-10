@@ -9,8 +9,8 @@ from typing import List, Dict, Any, Optional
 import torch
 
 # Set model cache to D: drive
-HF_STORAGE_DIR = "d:/BTech Project Antigravity/storage/models"
-os.environ["HF_HOME"] = HF_STORAGE_DIR
+HF_STORAGE_DIR = "runtime/research/models"
+os.environ.setdefault("HF_HOME", HF_STORAGE_DIR)
 
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from src.core.models import RetrievedChunk
